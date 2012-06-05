@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>htahub</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="htahub" />
+        <meta name="author" content="SPSA, 2011" />
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/styles.css" />
+        <link type="text/css" rel="stylesheet" href="css/chosen.css" />
+        <script type="text/javascript" src="lib/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/underscore.min.js"></script>
+        <script type="text/javascript" src="lib/backbone.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="lib/application.js"></script>
+        <script id="hta-template" type="text/template">
+            <div id='{{ name }}'>
+                <div class="span2">
+                    <span class='label label-inverse'>{{ name }}</span>
+                </div>
+                <div class="launchers span3">
+                    <a href='#' class='btn btn-info icon download'><i class="icon-download"></i></a>
+                    <a href='#' class='btn btn-success icon ssh'>ssh://</a>
+                    <a href='#' class='btn btn-primary icon launch'>hta://</a>
+                </div>
+                <div class="span7">
+                    <input title='{{ url }}' type='url' class='input-xlarge' value='{{ url }}' />
+                    <a href='#' class='btn btn-warning icon edit' alt='edit'><i class="icon-edit"></i></a>
+                    <a href='#' class='btn btn-success icon copy' alt='share'><i class="icon-share"></i></a>
+                    <a href='#' class='btn btn-danger icon delete' alt='delete'><i class="icon-trash"></i></a>
+                </div>
+            </div>
+        </script>
+        <script id="tag-template" type="text/template">
+            <a href="#"><i class="icon-folder-close"></i> {{ tag }} ({{ cnt }})</a>
+        </script>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">htahub</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li><a id="addhta" href="#">Add</a></li>
+                            <li class="active"><a id="helphta" href="#">All</a></li>
+                            <li><a id="helpssh" href="#">Starred</a></li>
+                            <li><a id="helpssh" href="#">Popular</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">
+                        <input id="filter" class="input-medium search-query" type="text" placeholder="Filter" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div id="copyModal" class="modal hide fade">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h3>Share Link</h3>
+                    </div>
+                    <div class="modal-body">
+                        <input class="input-xxlarge" type="text" placeholder="http://localhost/" />
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+                <div id="addModal" class="modal hide fade">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">×</button>
+                        <h3>Add an address</h3>
+                    </div>
+                    <div class="modal-body">
+                        <input class="input-xlarge" type="text" name="name" placeholder="Name" />
+                        <input class="input-xlarge" type="text" name="url" placeholder="URL" />
+                        <select data-placeholder="Pick icon" name="graphic" class="input-xlarge chzn-select">
+                            <option>Red</option>
+                            <option>Green</option>
+                            <option>Yellow</option>
+                        </select>
+                        <select data-placeholder="Pick tag" name="tags" multiple class="input-xlarge chzn-select">
+                            <option>Dog</option>
+                            <option>Cat</option>
+                            <option>Fish</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <a id='saveHta' href="#" class="btn btn-primary" data-dismiss="modal">Save</a>
+                        <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
+                <div id="htaTag" class="span2 well sidebar-nav">
+                </div>
+                <div class="span9">
+                    <div class="hero-unit">
+                        <h1>Hello, world!</h1>
+                        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                        <p><a class="btn btn-primary btn-large">Learn more »</a></p>
+                    </div>
+                    <div id="htaList">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

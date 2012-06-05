@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^load/([^/\.]+)/?$ x.php?load=1&name=$1 [L]
