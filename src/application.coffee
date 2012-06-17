@@ -1,33 +1,38 @@
-window.HTA = (->
+window.HTA = do ->
   init: ->
     _.templateSettings.interpolate = /\{\{(.+?)\}\}/g
 
-    Hta = Backbone.Model.extend(
-      handle: (protocol) ->
-        return this.get('url').replace('http', protocol)
+    Hta = Backbone.Model.extend
+      file: ->
+        return this.get('url').replace('http', 'file')
       ssh: ->
-        return this.get('url').replace('http', 'ssh')
+        return 'ssh://' + this.get('url').split('/')[2]?.replace(/:.*/, '')
+      hta: ->
+        return this.get('url').replace('http', 'hta')
       name: ->
         return encodeURI(this.get('name'))
-    )
-    HtaCollection = Backbone.Collection.extend(
+      toFullJSON: ->
+        return _.extend this.toJSON(),
+            ssh: this.ssh()
+            hta: this.hta()
+
+    HtaCollection = Backbone.Collection.extend
       model: Hta
       url: "x.php/htas"
-    )
+
     Tag = Backbone.Model.extend()
-    TagCollection = Backbone.Collection.extend(
+    TagCollection = Backbone.Collection.extend
       model: Tag
       url: "x.php/tags"
-    )
-    TagView = Backbone.View.extend(
-      tagName: "div"
 
+    TagView = Backbone.View.extend
+      tagName: "div"
       render: ->
-        template = $("#tag-template")
+        template = $("#tagTemplate")
         html = _.template(template.text(), @model.toJSON())
         $(@el).append html
-    )
-    HtaView = Backbone.View.extend(
+
+    HtaView = Backbone.View.extend
       tagName: "div"
       events:
         "click a.download": "handleDownload"
@@ -38,11 +43,11 @@ window.HTA = (->
 
       handleDownload: (e) ->
         e.preventDefault()
-        document.location.href = @model.handle('file')
+        document.location.href = @model.file()
 
       handleLaunch: (e) ->
         e.preventDefault()
-        document.location.href = @model.handle('hta')
+        document.location.href = @model.hta()
 
       handleSSH: (e) ->
         e.preventDefault()
@@ -51,11 +56,11 @@ window.HTA = (->
       handleDelete: (e) ->
         e.preventDefault()
         name = @model.get("name")
-        if confirm "Are you sure you want to delete #{name}?"
-          @model.destroy(
-            success: ->
-              $(e.currentTarget).parent().parent().fadeOut("slow")
-          )
+        bootbox.confirm "Are you sure you want to delete #{name}?", (confirmed) =>
+          if (confirmed)
+            @model.destroy
+              success: ->
+                $(e.currentTarget).parent().parent().fadeOut("slow")
 
       handleCopy: (e) ->
         e.preventDefault()
@@ -65,11 +70,11 @@ window.HTA = (->
         ].join('/'))
 
       render: ->
-        template = $("#hta-template")
-        html = _.template(template.text(), @model.toJSON())
+        template = $("#htaTemplate")
+        html = _.template(template.text(), @model.toFullJSON())
         $(@el).append html
-    )
-    NavView = Backbone.View.extend(
+
+    NavView = Backbone.View.extend
       el: $("div.navbar")
       events:
         "click a#addhta": "handleAdd"
@@ -84,8 +89,8 @@ window.HTA = (->
         App.Views.ListView.getCollection().fetch { data: { name: name } }, (->
           success: ->
         )
-    )
-    AddView = Backbone.View.extend(
+
+    AddView = Backbone.View.extend
       events:
         "click #saveHta": "handleAdd"
 
@@ -104,12 +109,12 @@ window.HTA = (->
 
       show: ->
         $(this.el).modal('toggle')
-    )
-    HtaTagView = Backbone.View.extend(
+
+    HtaTagView = Backbone.View.extend
       tagName: "ul"
       className: "nav nav-list"
 
-      initialize: () ->
+      initialize: ->
         _.bindAll this, "renderItem", "render", "getCollection"
         @collection.bind('reset', @render)
         @collection.bind('add', @renderItem)
@@ -126,11 +131,11 @@ window.HTA = (->
 
       getCollection: ->
         return @collection
-    )
-    HtaListView = Backbone.View.extend(
+
+    HtaListView = Backbone.View.extend
       tagName: "div"
 
-      initialize: () ->
+      initialize: ->
         _.bindAll this, "renderItem", "render", "getCollection"
         @collection.bind('reset', @render)
         @collection.bind('add', @renderItem)
@@ -139,17 +144,18 @@ window.HTA = (->
       renderItem: (model) ->
         htaView = new HtaView(model: model)
         htaView.render()
-        $(@el).prepend htaView.el
+        $(@el).prepend(htaView.el).find('[rel=tooltip]').tooltip()
         return htaView
 
       render: ->
         $(@el).empty()
         @collection.each @renderItem
         $("#htaList").html @el
+        $("[rel=tooltip]").tooltip()
 
       getCollection: ->
         return @collection
-    )
+
     App =
       Views: {}
       Routers: {}
@@ -157,7 +163,7 @@ window.HTA = (->
         new AppRouter
         Backbone.history.start()
 
-    AppRouter = Backbone.Router.extend(
+    AppRouter = Backbone.Router.extend
       routes:
         "": "index"
 
@@ -170,9 +176,8 @@ window.HTA = (->
         App.Views.TagView = new HtaTagView(collection: tags)
         tags.fetch
           success: ->
-    )
 
     App.init()
-)()
+
 $ ->
   HTA.init()
