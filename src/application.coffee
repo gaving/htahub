@@ -1,3 +1,9 @@
+
+_ = require('underscore')
+Backbone = require('backbone')
+jQuery = require('jQuery')
+$ = require('jQuery')
+
 window.HTA = do ->
   init: ->
     _.templateSettings.interpolate = /\{\{(.+?)\}\}/g
@@ -98,14 +104,13 @@ window.HTA = do ->
         $('.chzn-select').chosen()
 
       handleAdd: ->
-        App.Views.ListView.getCollection().create(
+        App.Views.ListView.getCollection().create
           name: $(this.el).find('input[name=name]').val()
           url: $(this.el).find('input[name=url]').val()
           graphic: $(this.el).find('select[name=graphic] option:selected').val()
           tags: $(this.el).find("select[name=tags] option:selected").map(->
             return this.value
           ).get().join(",")
-        )
 
       show: ->
         $(this.el).modal('toggle')

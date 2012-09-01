@@ -4,19 +4,16 @@
         <title>htahub</title>
         <meta charset="utf-8" />
         <meta name="description" content="htahub" />
-        <meta name="author" content="SPSA, 2012" />
         <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
         <link type="text/css" rel="stylesheet" href="css/styles.css" />
         <link type="text/css" rel="stylesheet" href="css/chosen.css" />
-        <script type="text/javascript" src="lib/jquery.min.js"></script>
-        <script type="text/javascript" src="lib/underscore.min.js"></script>
-        <script type="text/javascript" src="lib/backbone.min.js"></script>
+        <script type="text/javascript" src="lib/ender.min.js"></script>
+        <script type="text/javascript" src="lib/application.js"></script>
         <script type="text/javascript" src="lib/bootstrap.min.js"></script>
         <script type="text/javascript" src="lib/bootbox.min.js"></script>
         <script type="text/javascript" src="lib/chosen.jquery.min.js"></script>
-        <script type="text/javascript" src="lib/application.js"></script>
         <script id="htaTemplate" type="text/template">
             <div id='{{ name }}'>
                 <div class="span2">
@@ -55,9 +52,8 @@
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li><a id="addhta" href="#">Add</a></li>
-                            <li class="active"><a id="helphta" href="#">All</a></li>
-                            <li><a id="helpssh" href="#">Starred</a></li>
-                            <li><a id="helpssh" href="#">Popular</a></li>
+                            <li class="active"><a id="all" href="#">All</a></li>
+                            <li><a id="starred" href="#">Starred</a></li>
                         </ul>
                     </div>
                     <div class="pull-right">
