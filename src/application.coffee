@@ -1,4 +1,3 @@
-
 _ = require('underscore')
 Backbone = require('backbone')
 jQuery = require('jQuery')
@@ -24,7 +23,8 @@ window.HTA = do ->
 
     HtaCollection = Backbone.Collection.extend
       model: Hta
-      url: "x.php/htas"
+      url: ->
+        return "x.php/htas"
 
     Tag = Backbone.Model.extend()
     TagCollection = Backbone.Collection.extend
@@ -101,7 +101,15 @@ window.HTA = do ->
         "click #saveHta": "handleAdd"
 
       initialize: ->
-        $('.chzn-select').chosen()
+        @render()
+
+      render: ->
+          tags = new TagCollection
+          tags.bind "reset", ->
+            html = _.template $("#addSelectTemplate").html(), tags: tags.toJSON()
+            $('#tags').append html
+            $('.chzn-select').chosen()
+          tags.fetch()
 
       handleAdd: ->
         App.Views.ListView.getCollection().create
@@ -171,12 +179,24 @@ window.HTA = do ->
     AppRouter = Backbone.Router.extend
       routes:
         "": "index"
+        "tagged/:tag": "tagged"
 
       index: ->
         htas = new HtaCollection
         App.Views.ListView = new HtaListView(collection: htas)
         htas.fetch
           success: ->
+        tags = new TagCollection
+        App.Views.TagView = new HtaTagView(collection: tags)
+        tags.fetch
+          success: ->
+
+      tagged: (tag) ->
+        htas = new HtaCollection
+        App.Views.ListView = new HtaListView(collection: htas)
+        App.Views.ListView.getCollection().fetch { data: { tag: tag } }, (->
+          success: ->
+        )
         tags = new TagCollection
         App.Views.TagView = new HtaTagView(collection: tags)
         tags.fetch

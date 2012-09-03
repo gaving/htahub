@@ -33,10 +33,12 @@
             </div>
         </script>
         <script id="tagTemplate" type="text/template">
-            <a href="#"><i class="icon-folder-close"></i> {{ tag }} ({{ cnt }})</a>
+            <a href="#tagged/{{ tag }}"><i class="icon-tag"></i> {{ tag }}</a>
         </script>
-        <script id="tagAddTemplate" type="text/template">
-            <option>{{ name }]</option>
+        <script id="addSelectTemplate" type="text/template">
+            <% _(tags).each(function(tag) { %>
+              <option value="{{ tag.id }}">{{ tag.tag }}</option>
+            <% }); %>
         </script>
     </head>
     <body>
@@ -53,7 +55,7 @@
                         <ul class="nav">
                             <li><a id="addhta" href="#">Add</a></li>
                             <li class="active"><a id="all" href="#">All</a></li>
-                            <li><a id="starred" href="#">Starred</a></li>
+                            <!--<li><a id="starred" href="#">Starred</a></li>-->
                         </ul>
                     </div>
                     <div class="pull-right">
@@ -90,9 +92,6 @@
                             <option>Yellow</option>
                         </select>
                         <select id="tags" data-placeholder="Pick tag" name="tags" multiple class="input-xlarge chzn-select">
-                            <option>Dog</option>
-                            <option>Cat</option>
-                            <option>Fish</option>
                         </select>
                         <textarea id="notes" rows="5" class="input-xxlarge"></textarea>
                     </div>
