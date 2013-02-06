@@ -84,13 +84,14 @@ window.HTA = do ->
       el: $("div.navbar")
       events:
         "click a#addhta": "handleAdd"
-        "keydown #filter": "handleFilter"
+        "keypress #filter": "handleFilter"
 
       handleAdd: (e) ->
         e.preventDefault()
         new AddView({ el: $('#addModal') }).show()
 
       handleFilter: (e) ->
+        return unless e.keyCode == 13
         name = $(e.currentTarget).val()
         App.Views.ListView.getCollection().fetch { data: { name: name } }, (->
           success: ->
