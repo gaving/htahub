@@ -1,26 +1,7 @@
 <?php
 
-/**
- * HTALoader
- *
- * Database controller.
- *
- * @author SPSA
- * @version 1.0
- * @copyright Copyright 2012, SPSA
- */
+use RedBean_Facade as R;
 
-require_once 'rb.php';
-
-/**
- * HTALoader
- *
- * Database controller.
- *
- * @author SPSA
- * @version 1.0
- * @copyright Copyright 2012, SPSA
- */
 class HTALoader
 {
 
@@ -91,11 +72,11 @@ class HTALoader
 
     public function fetchTags(array $term=null)
     {
-/*        $yeah = R::getAll("SELECT t.tag, t.id, count(*) AS cnt*/
-            //FROM tags AS t
-            //INNER JOIN hta_tags qt ON (qt.tag_id = t.id)
-            //INNER JOIN hta q ON (q.id = qt.hta_id)
-            //ORDER BY cnt DESC"
+        /*        $yeah = R::getAll("SELECT t.tag, t.id, count(*) AS cnt*/
+        //FROM tags AS t
+        //INNER JOIN hta_tags qt ON (qt.tag_id = t.id)
+        //INNER JOIN hta q ON (q.id = qt.hta_id)
+        //ORDER BY cnt DESC"
         /*);*/
         $yeah = R::getAll("SELECT t.tag, t.id FROM tags AS t");
         return $yeah;

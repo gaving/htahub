@@ -1,23 +1,13 @@
 <?php
 
-/**
- * Controller
- *
- * @author SPSA
- * @version 1.0
- * @copyright Copyright 2012, SPSA
- */
+require_once 'vendor/autoload.php';
 
-require_once 'inc/Slim/Slim.php';
-require_once 'inc/mustache.php';
 require_once 'inc/HtaLoader.php';
-require_once 'inc/spyc.php';
 
 $data = Spyc::YAMLLoad('cfg/config.yml');
 $loader = new HTALoader($data['config']['database']);
 
-$app = new Slim();
-$app->add(new Slim_Middleware_ContentTypes());
+$app = new \Slim\Slim();
 
 $app->get('/htas/:tag', function ($tag) use ($app, $loader) {
     $loader->echoJSON($loader->fetchWithTag($tag));
@@ -63,5 +53,3 @@ $app->delete('/tags', function () {
 });
 
 $app->run();
-
-?>

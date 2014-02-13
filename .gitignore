@@ -2,3 +2,6 @@
 tags
 data/
 node_modules/
+.ctrlp
+composer.lock
+vendor
