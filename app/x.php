@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 require_once 'inc/HtaLoader.php';
 
@@ -8,6 +8,7 @@ $data = Spyc::YAMLLoad('cfg/config.yml');
 $loader = new HTALoader($data['config']['database']);
 
 $app = new \Slim\Slim();
+$app->response->headers->set('Content-Type', 'application/json');
 
 $app->get('/htas/:tag', function ($tag) use ($app, $loader) {
     $loader->echoJSON($loader->fetchWithTag($tag));
@@ -37,6 +38,7 @@ $app->delete('/htas/:id', function ($id) use ($app, $loader) {
 
 $app->get('/tags', function () use ($app, $loader) {
     $term = (isset($_GET['name'])) ? array('name' => $_GET['name']) : null;
+    $app->response->headers->set('Content-Type', 'application/json');
     $loader->echoJSON($loader->fetchTags($term));
 });
 

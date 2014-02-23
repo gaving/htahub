@@ -5,3 +5,4 @@ node_modules/
 .ctrlp
 composer.lock
 vendor
+bower_components

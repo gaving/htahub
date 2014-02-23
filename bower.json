@@ -1,0 +1,16 @@
+{
+  "name": "htahub",
+  "version": "0.0.0",
+  "dependencies": {
+    "alertify.js": "~0.3.11",
+    "screenfull": "~1.1.1",
+    "keymaster": "~1.6.1",
+    "humane-js": "~3.1.0",
+    "bootstrap": "~3.1.1",
+    "bootbox": "~4.1.0",
+    "jquery": "~2.1.0",
+    "backbone": "~1.1.1",
+    "underscore": "~1.6.0",
+    "backbone.localStorage": "~1.1.7"
+  }
+}

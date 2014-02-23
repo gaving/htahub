@@ -1,8 +1,3 @@
-_ = require('underscore')
-Backbone = require('backbone')
-jQuery = require('jQuery')
-$ = require('jQuery')
-
 window.HTA = do ->
   init: ->
     _.templateSettings.interpolate = /\{\{(.+?)\}\}/g
@@ -23,13 +18,12 @@ window.HTA = do ->
 
     HtaCollection = Backbone.Collection.extend
       model: Hta
-      url: ->
-        return "x.php/htas"
+      url: "../app/htas"
 
     Tag = Backbone.Model.extend()
     TagCollection = Backbone.Collection.extend
       model: Tag
-      url: "x.php/tags"
+      url: "../app/tags"
 
     TagView = Backbone.View.extend
       tagName: "div"
@@ -40,6 +34,7 @@ window.HTA = do ->
 
     HtaView = Backbone.View.extend
       tagName: "div"
+      className: "row"
       events:
         "click a.download": "handleDownload"
         "click a.launch": "handleLaunch"
@@ -72,7 +67,7 @@ window.HTA = do ->
         e.preventDefault()
         $('#copyModal').modal('toggle').find('input').val([
           window.location.href,
-          'x.php?op=load&name=' + @model.name()
+          '../app?op=load&name=' + @model.name()
         ].join('/'))
 
       render: ->
@@ -106,7 +101,7 @@ window.HTA = do ->
 
       render: ->
           tags = new TagCollection
-          tags.bind "reset", ->
+          tags.on "reset", ->
             html = _.template $("#addSelectTemplate").html(), tags: tags.toJSON()
             $('#tags').append html
             $('.chzn-select').chosen()
@@ -129,9 +124,8 @@ window.HTA = do ->
       className: "nav nav-list"
 
       initialize: ->
-        _.bindAll this, "renderItem", "render", "getCollection"
-        @collection.bind('reset', @render)
-        @collection.bind('add', @renderItem)
+        @listenTo(@collection, 'reset', @render)
+        @listenTo(@collection, 'add', @renderItem)
 
       renderItem: (model) ->
         tagView = new TagView(model: model)
@@ -140,32 +134,29 @@ window.HTA = do ->
 
       render: ->
         $(@el).empty()
-        @collection.each @renderItem
+        @collection.each $.proxy(@renderItem, @)
         $("#htaTag").html @el
 
       getCollection: ->
         return @collection
 
     HtaListView = Backbone.View.extend
-      tagName: "div"
+      el: "#htaList"
 
       initialize: ->
-        _.bindAll this, "renderItem", "render", "getCollection"
-        @collection.bind('reset', @render)
-        @collection.bind('add', @renderItem)
-        new NavView()
+        @listenTo(@collection, 'reset', @render)
+        @listenTo(@collection, 'add', @renderItem)
+        #new NavView()
 
       renderItem: (model) ->
         htaView = new HtaView(model: model)
         htaView.render()
-        $(@el).prepend(htaView.el).find('[rel=tooltip]').tooltip()
-        return htaView
+        $(@el).prepend(htaView.el)
 
       render: ->
         $(@el).empty()
-        @collection.each @renderItem
-        $("#htaList").html @el
-        $("[rel=tooltip]").tooltip()
+        @collection.each $.proxy(@renderItem, @)
+        #$("[rel=tooltip]").tooltip()
 
       getCollection: ->
         return @collection
@@ -186,10 +177,12 @@ window.HTA = do ->
         htas = new HtaCollection
         App.Views.ListView = new HtaListView(collection: htas)
         htas.fetch
+          reset: true
           success: ->
         tags = new TagCollection
         App.Views.TagView = new HtaTagView(collection: tags)
         tags.fetch
+          reset: true
           success: ->
 
       tagged: (tag) ->

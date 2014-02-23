@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /~gavin/htahub/app
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

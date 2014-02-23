@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>htahub</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="htahub" />
+        <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/styles.css" />
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
+        <script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+        <script type="text/javascript" src="js/application.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="bower_components/bootbox/bootbox.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js"></script>
+        <script id="htaTemplate" type="text/template">
+            <div class="col-md-4">
+                <h4><span class='label label-default'>{{ name }}</span></h4>
+            </div>
+            <div class="launchers">
+                <div class="input-group input-group-sm">
+                  <a href='#' class='btn btn-info ssh input-group-addon' rel="tooltip" title="{{ ssh }}">ssh://</a>
+                  <a href='#' class='btn btn-success launch input-group-addon' rel="tooltip" title="{{ hta }}">http://</a>
+                  <a href='#' class='btn btn-warning launch input-group-addon' rel="tooltip" title="{{ hta }}">https://</a>
+                  <input title='{{ url }}' type='url' class='form-control' value='{{ url }}' />
+                  <a href='#' class='btn btn-success download input-group-addon' rel="tooltip" title="download"><span class="glyphicon glyphicon-download"></span></a>
+                  <a href='#' class='btn btn-default btn-success copy input-group-addon'  rel="tooltip" title='share'><span class="glyphicon glyphicon-share"></span></a>
+                  <a href='#' class='btn btn-default btn-danger delete input-group-addon' rel="tooltip" title='delete'><span class="glyphicon glyphicon-trash"></span></a>
+                </div>
+            </div>
+        </script>
+        <script id="tagTemplate" type="text/template">
+            <a href="#tagged/{{ tag }}"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</a>
+        </script>
+        <script id="addSelectTemplate" type="text/template">
+            <% _(tags).each(function(tag) { %>
+              <option value="{{ tag.id }}">{{ tag.tag }}</option>
+            <% }); %>
+        </script>
+    </head>
+    <body>
+      <div class="navbar navbar-inverse navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">HtaHub</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+            </ul>
+            <form class="navbar-form navbar-right search-query" role="form">
+              <div class="form-group">
+                <input type="text" placeholder="Search" class="form-control" />
+              </div>
+              <button type="submit" class="btn btn-success">Filter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div id="copyModal" class="modal hide fade">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">×</button>
+              <h3>Share Link</h3>
+            </div>
+            <div class="modal-body">
+              <input class="input-xxlarge" type="text" placeholder="http://localhost/"
+              />
+            </div>
+            <div class="modal-footer"> <a href="#" class="btn btn-default btn-primary" data-dismiss="modal">Close</a>
+            </div>
+          </div>
+          <div id="addModal" class="modal hide fade">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">×</button>
+              <h3>Add an address</h3>
+            </div>
+            <div class="modal-body">
+              <input class="input-xlarge" type="text" name="name" placeholder="Name"
+              />
+              <input class="input-xlarge" type="text" name="url" placeholder="URL" />
+              <select data-placeholder="Pick icon" name="graphic" class="input-xlarge chzn-select">
+                <option>Red</option>
+                <option>Green</option>
+                <option>Yellow</option>
+              </select>
+              <select id="tags" data-placeholder="Pick tag" name="tags" multiple="multiple"
+                class="input-xlarge chzn-select"></select>
+              <textarea id="notes" rows="5" class="input-xxlarge"></textarea>
+            </div>
+            <div class="modal-footer"> <a id="saveHta" href="#" class="btn btn-default btn-primary" data-dismiss="modal">Save</a>
+              <a
+                href="#" class="btn btn-default btn-secondary" data-dismiss="modal">Cancel</a>
+            </div>
+          </div>
+          <div id="htaTag" class="col-md-2 well sidebar-nav"></div>
+          <div id="htaList" class="col-md-9"></div>
+        </div>
+      </div>
+    </body>
+  </html>

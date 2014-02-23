@@ -1,0 +1,19 @@
+{
+  "name": "htahub",
+  "private": true,
+  "version": "0.0.0",
+  "description": "place for storing htas",
+  "dependencies": {
+    "grunt": "0.4.1",
+    "bower": "~1.2.8"
+  },
+  "repository": "",
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "grunt-contrib-coffee": "~0.8.2",
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.5.2",
+    "gulp-coffee": "~1.4.1"
+  }
+}
