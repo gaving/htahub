@@ -23,8 +23,7 @@
             <div class="launchers">
                 <div class="input-group input-group-sm">
                   <a href='#' class='btn btn-info ssh input-group-addon' rel="tooltip" title="{{ ssh }}">ssh://</a>
-                  <a href='#' class='btn btn-success launch input-group-addon' rel="tooltip" title="{{ hta }}">http://</a>
-                  <a href='#' class='btn btn-warning launch input-group-addon' rel="tooltip" title="{{ hta }}">https://</a>
+                  <a href='#' class='btn btn-warning launch input-group-addon' rel="tooltip" title="{{ hta }}">http://</a>
                   <input title='{{ url }}' type='url' class='form-control' value='{{ url }}' />
                   <a href='#' class='btn btn-success download input-group-addon' rel="tooltip" title="download"><span class="glyphicon glyphicon-download"></span></a>
                   <a href='#' class='btn btn-default btn-success copy input-group-addon'  rel="tooltip" title='share'><span class="glyphicon glyphicon-share"></span></a>
@@ -51,7 +50,7 @@
             </ul>
             <form class="navbar-form navbar-right search-query" role="form">
               <div class="form-group">
-                <input type="text" id="filter" placeholder="Search" class="form-control" />
+                <input type="text" id="filter" autocomplete="off" placeholder="Search" class="form-control" />
               </div>
             </form>
           </div>

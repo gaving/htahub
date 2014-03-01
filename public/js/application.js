@@ -6,14 +6,16 @@ window.HTA = (function() {
       _.templateSettings.interpolate = /\{\{(.+?)\}\}/g;
       Hta = Backbone.Model.extend({
         file: function() {
-          return this.get('url').replace('http', 'file');
+          var _ref;
+          return (_ref = this.get('url')) != null ? _ref.replace('http', 'file') : void 0;
         },
         ssh: function() {
-          var _ref;
-          return 'ssh://' + ((_ref = this.get('url').split('/')[2]) != null ? _ref.replace(/:.*/, '') : void 0);
+          var _ref, _ref1;
+          return 'ssh://' + ((_ref = this.get('url')) != null ? (_ref1 = _ref.split('/')[2]) != null ? _ref1.replace(/:.*/, '') : void 0 : void 0);
         },
         hta: function() {
-          return this.get('url').replace('http', 'hta');
+          var _ref;
+          return (_ref = this.get('url')) != null ? _ref.replace('http', 'hta') : void 0;
         },
         name: function() {
           return encodeURI(this.get('name'));
@@ -82,7 +84,7 @@ window.HTA = (function() {
         el: $("div.navbar"),
         events: {
           "click a#addhta": "handleAdd",
-          "keypress #filter": "handleFilter"
+          "keyup #filter": "handleFilter"
         },
         handleAdd: function(e) {
           e.preventDefault();
@@ -94,15 +96,11 @@ window.HTA = (function() {
           var name;
           name = $(e.currentTarget).val();
           return App.Views.ListView.getCollection().fetch({
+            reset: true,
             data: {
               name: name
             }
-          }, (function() {
-            return {
-              fetch: true,
-              success: function() {}
-            };
-          }));
+          });
         }
       });
       AddView = Backbone.View.extend({

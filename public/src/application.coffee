@@ -4,11 +4,11 @@ window.HTA = do ->
 
     Hta = Backbone.Model.extend
       file: ->
-        return this.get('url').replace('http', 'file')
+        return this.get('url')?.replace('http', 'file')
       ssh: ->
-        return 'ssh://' + this.get('url').split('/')[2]?.replace(/:.*/, '')
+        return 'ssh://' + this.get('url')?.split('/')[2]?.replace(/:.*/, '')
       hta: ->
-        return this.get('url').replace('http', 'hta')
+        return this.get('url')?.replace('http', 'hta')
       name: ->
         return encodeURI(this.get('name'))
       toFullJSON: ->
@@ -67,7 +67,7 @@ window.HTA = do ->
       el: $("div.navbar")
       events:
         "click a#addhta": "handleAdd"
-        "keypress #filter": "handleFilter"
+        "keyup #filter": "handleFilter"
 
       handleAdd: (e) ->
         e.preventDefault()
@@ -75,10 +75,7 @@ window.HTA = do ->
 
       handleFilter: (e) ->
         name = $(e.currentTarget).val()
-        App.Views.ListView.getCollection().fetch { data: { name: name } }, (->
-          fetch: true
-          success: ->
-        )
+        App.Views.ListView.getCollection().fetch({ reset: true, data: { name: name } })
 
     AddView = Backbone.View.extend
       events:
