@@ -29,23 +29,23 @@ window.HTA = (function() {
       });
       HtaCollection = Backbone.Collection.extend({
         model: Hta,
-        url: "../app/htas"
+        url: '../app/htas'
       });
       HtaView = Backbone.View.extend({
-        tagName: "div",
-        className: "row",
+        tagName: 'div',
+        className: 'row',
         events: {
-          "click a.download": "handleDownload",
-          "click a.launch": "handleLaunch",
-          "click a.ssh": "handleSSH",
-          "click a.delete": "handleDelete",
-          "click a.copy": "handleCopy"
+          'click button.download': 'handleDownload',
+          'click button.launch': 'handleHTA',
+          'click button.ssh': 'handleSSH',
+          'click button.delete': 'handleDelete',
+          'click button.copy': 'handleCopy'
         },
         handleDownload: function(e) {
           e.preventDefault();
           return document.location.href = this.model.file();
         },
-        handleLaunch: function(e) {
+        handleHTA: function(e) {
           e.preventDefault();
           return document.location.href = this.model.hta();
         },
@@ -56,13 +56,13 @@ window.HTA = (function() {
         handleDelete: function(e) {
           var name;
           e.preventDefault();
-          name = this.model.get("name");
-          return bootbox.confirm("Are you sure you want to delete " + name + "?", (function(_this) {
+          name = this.model.get('name');
+          return bootbox.confirm("Are you sure you want to delete '" + name + "'?", (function(_this) {
             return function(confirmed) {
               if (confirmed) {
                 return _this.model.destroy({
                   success: function() {
-                    return $(e.currentTarget).parent().parent().fadeOut("slow");
+                    return $(e.currentTarget).parent().parent().fadeOut('slow');
                   }
                 });
               }
@@ -71,20 +71,20 @@ window.HTA = (function() {
         },
         handleCopy: function(e) {
           e.preventDefault();
-          return $('#copyModal').modal('toggle').find('input').val([window.location.href, '../app?op=load&name=' + this.model.name()].join('/'));
+          return $('#copyModal').modal('toggle').find('input').val([window.location.href, '../app/load/' + this.model.name()].join('/'));
         },
         render: function() {
           var html, template;
-          template = $("#htaTemplate");
+          template = $('#htaTemplate');
           html = _.template(template.text(), this.model.toFullJSON());
           return $(this.el).append(html);
         }
       });
       NavView = Backbone.View.extend({
-        el: $("div.navbar"),
+        el: $('div.navbar'),
         events: {
-          "click a#addhta": "handleAdd",
-          "keyup #filter": "handleFilter"
+          'click a#addhta': 'handleAdd',
+          'keyup #filter': 'handleFilter'
         },
         handleAdd: function(e) {
           e.preventDefault();
@@ -105,7 +105,7 @@ window.HTA = (function() {
       });
       AddView = Backbone.View.extend({
         events: {
-          "click #saveHta": "handleAdd"
+          'click #saveHta': 'handleAdd'
         },
         initialize: function() {
           return this.render();
@@ -123,7 +123,7 @@ window.HTA = (function() {
         }
       });
       HtaListView = Backbone.View.extend({
-        el: "#htaList",
+        el: '#htaList',
         initialize: function() {
           this.listenTo(this.collection, 'reset', this.render);
           return this.listenTo(this.collection, 'add', this.renderItem);
@@ -154,7 +154,7 @@ window.HTA = (function() {
       };
       AppRouter = Backbone.Router.extend({
         routes: {
-          "": "index"
+          '': 'index'
         },
         index: function() {
           var htas;

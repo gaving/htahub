@@ -18,23 +18,23 @@ window.HTA = do ->
 
     HtaCollection = Backbone.Collection.extend
       model: Hta
-      url: "../app/htas"
+      url: '../app/htas'
 
     HtaView = Backbone.View.extend
-      tagName: "div"
-      className: "row"
+      tagName: 'div'
+      className: 'row'
       events:
-        "click a.download": "handleDownload"
-        "click a.launch": "handleLaunch"
-        "click a.ssh": "handleSSH"
-        "click a.delete": "handleDelete"
-        "click a.copy": "handleCopy"
+        'click button.download': 'handleDownload'
+        'click button.launch': 'handleHTA'
+        'click button.ssh': 'handleSSH'
+        'click button.delete': 'handleDelete'
+        'click button.copy': 'handleCopy'
 
       handleDownload: (e) ->
         e.preventDefault()
         document.location.href = @model.file()
 
-      handleLaunch: (e) ->
+      handleHTA: (e) ->
         e.preventDefault()
         document.location.href = @model.hta()
 
@@ -44,30 +44,30 @@ window.HTA = do ->
 
       handleDelete: (e) ->
         e.preventDefault()
-        name = @model.get("name")
-        bootbox.confirm "Are you sure you want to delete #{name}?", (confirmed) =>
+        name = @model.get('name')
+        bootbox.confirm "Are you sure you want to delete '#{name}'?", (confirmed) =>
           if (confirmed)
             @model.destroy
               success: ->
-                $(e.currentTarget).parent().parent().fadeOut("slow")
+                $(e.currentTarget).parent().parent().fadeOut('slow')
 
       handleCopy: (e) ->
         e.preventDefault()
         $('#copyModal').modal('toggle').find('input').val([
           window.location.href,
-          '../app?op=load&name=' + @model.name()
+          '../app/load/' + @model.name()
         ].join('/'))
 
       render: ->
-        template = $("#htaTemplate")
+        template = $('#htaTemplate')
         html = _.template(template.text(), @model.toFullJSON())
         $(@el).append html
 
     NavView = Backbone.View.extend
-      el: $("div.navbar")
+      el: $('div.navbar')
       events:
-        "click a#addhta": "handleAdd"
-        "keyup #filter": "handleFilter"
+        'click a#addhta': 'handleAdd'
+        'keyup #filter': 'handleFilter'
 
       handleAdd: (e) ->
         e.preventDefault()
@@ -79,7 +79,7 @@ window.HTA = do ->
 
     AddView = Backbone.View.extend
       events:
-        "click #saveHta": "handleAdd"
+        'click #saveHta': 'handleAdd'
 
       initialize: ->
         @render()
@@ -96,7 +96,7 @@ window.HTA = do ->
         $(this.el).modal('toggle')
 
     HtaListView = Backbone.View.extend
-      el: "#htaList"
+      el: '#htaList'
 
       initialize: ->
         @listenTo(@collection, 'reset', @render)
@@ -110,7 +110,6 @@ window.HTA = do ->
       render: ->
         $(@el).empty()
         @collection.each $.proxy(@renderItem, @)
-        #$("[rel=tooltip]").tooltip()
 
       getCollection: ->
         return @collection
@@ -124,7 +123,7 @@ window.HTA = do ->
 
     AppRouter = Backbone.Router.extend
       routes:
-        "": "index"
+        '': 'index'
 
       index: ->
         new NavView()
