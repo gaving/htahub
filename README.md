@@ -1,3 +1,7 @@
 # HtaHub
 
-A front-end for managing a storing hta files.
+A front-end for managing and storing HTA files.
+
+## Installation
+
+    bower install
