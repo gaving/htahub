@@ -100,9 +100,7 @@ window.HTA = (function() {
           }, (function() {
             return {
               fetch: true,
-              success: function() {
-                return console.log("yea");
-              }
+              success: function() {}
             };
           }));
         }

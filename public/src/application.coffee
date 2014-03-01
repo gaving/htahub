@@ -78,7 +78,6 @@ window.HTA = do ->
         App.Views.ListView.getCollection().fetch { data: { name: name } }, (->
           fetch: true
           success: ->
-            console.log "yea"
         )
 
     AddView = Backbone.View.extend
