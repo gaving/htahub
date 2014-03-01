@@ -49,7 +49,7 @@ window.HTA = do ->
           if (confirmed)
             @model.destroy
               success: ->
-                $(e.currentTarget).parent().parent().fadeOut('slow')
+                App.Views.ListView.getCollection().fetch({ reset: true })
 
       handleCopy: (e) ->
         e.preventDefault()

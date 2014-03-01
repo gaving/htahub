@@ -23,7 +23,7 @@ $app->post('/htas', function () use ($app, $loader) {
 });
 
 $app->delete('/htas/:id', function ($id) use ($app, $loader) {
-    $app->response->body($loader->del($id));
+    $app->response->body(json_encode($loader->del($id)));
 });
 
 $app->run();

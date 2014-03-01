@@ -62,7 +62,9 @@ window.HTA = (function() {
               if (confirmed) {
                 return _this.model.destroy({
                   success: function() {
-                    return $(e.currentTarget).parent().parent().fadeOut('slow');
+                    return App.Views.ListView.getCollection().fetch({
+                      reset: true
+                    });
                   }
                 });
               }
