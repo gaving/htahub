@@ -11,7 +11,6 @@ class HTALoader
     {
         R::setup('sqlite:' . $database);
         R::debug(false);
-        //R::freeze(false);
     }
 
     public function find($id)
@@ -35,16 +34,15 @@ class HTALoader
 
     public function del($id)
     {
-        //R::exec("DELETE FROM hta WHERE id=$id");
         R::trash($this->find($id));
     }
 
     public function fetch(array $term=null)
     {
         if (is_null($term)) {
-            $b = R::find("hta", '1 ORDER BY graphic, name ASC');
+            $b = R::find("hta", '1 ORDER BY name DESC');
         } else {
-            $b = R::find('hta',"name LIKE :name ORDER BY graphic, name ASC", array(
+            $b = R::find('hta',"name LIKE :name ORDER BY name DESC", array(
                 ':name' => '%'.$term['name'].'%'
             ));
         }
