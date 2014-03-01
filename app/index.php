@@ -3,7 +3,7 @@
 require_once '../vendor/autoload.php';
 require_once 'inc/HtaLoader.php';
 
-$data = Spyc::YAMLLoad('cfg/config.yml');
+$data = Spyc::YAMLLoad('config.yml');
 $loader = new HTALoader($data['config']['database']);
 
 $app = new \Slim\Slim();
