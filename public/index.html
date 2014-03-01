@@ -16,7 +16,7 @@
         <script type="text/javascript" src="bower_components/bootbox/bootbox.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js"></script>
         <script id="htaTemplate" type="text/template">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h4><span class='label label-default'>{{ name }}</span></h4>
             </div>
             <div class="launchers">
@@ -30,14 +30,6 @@
                   <a href='#' class='btn btn-default btn-danger delete input-group-addon' rel="tooltip" title='delete'><span class="glyphicon glyphicon-trash"></span></a>
                 </div>
             </div>
-        </script>
-        <script id="tagTemplate" type="text/template">
-            <a href="#tagged/{{ tag }}"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</a>
-        </script>
-        <script id="addSelectTemplate" type="text/template">
-            <% _(tags).each(function(tag) { %>
-              <option value="{{ tag.id }}">{{ tag.tag }}</option>
-            <% }); %>
         </script>
     </head>
     <body>
@@ -54,57 +46,58 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#" id="addhta">Create</a></li>
             </ul>
             <form class="navbar-form navbar-right search-query" role="form">
               <div class="form-group">
-                <input type="text" placeholder="Search" class="form-control" />
+                <input type="text" id="filter" placeholder="Search" class="form-control" />
               </div>
-              <button type="submit" class="btn btn-success">Filter</button>
             </form>
           </div>
         </div>
       </div>
       <div class="container">
-        <div class="row">
-          <div id="copyModal" class="modal hide fade">
-            <div class="modal-header">
-              <button class="close" data-dismiss="modal">×</button>
-              <h3>Share Link</h3>
-            </div>
-            <div class="modal-body">
-              <input class="input-xxlarge" type="text" placeholder="http://localhost/"
-              />
-            </div>
-            <div class="modal-footer"> <a href="#" class="btn btn-default btn-primary" data-dismiss="modal">Close</a>
-            </div>
-          </div>
-          <div id="addModal" class="modal hide fade">
-            <div class="modal-header">
-              <button class="close" data-dismiss="modal">×</button>
-              <h3>Add an address</h3>
-            </div>
-            <div class="modal-body">
-              <input class="input-xlarge" type="text" name="name" placeholder="Name"
-              />
-              <input class="input-xlarge" type="text" name="url" placeholder="URL" />
-              <select data-placeholder="Pick icon" name="graphic" class="input-xlarge chzn-select">
-                <option>Red</option>
-                <option>Green</option>
-                <option>Yellow</option>
-              </select>
-              <select id="tags" data-placeholder="Pick tag" name="tags" multiple="multiple"
-                class="input-xlarge chzn-select"></select>
-              <textarea id="notes" rows="5" class="input-xxlarge"></textarea>
-            </div>
-            <div class="modal-footer"> <a id="saveHta" href="#" class="btn btn-default btn-primary" data-dismiss="modal">Save</a>
-              <a
-                href="#" class="btn btn-default btn-secondary" data-dismiss="modal">Cancel</a>
+          <div id="copyModal" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" data-dismiss="modal">×</button>
+                  <h3>Share Link</h3>
+                </div>
+                <div class="modal-body">
+                  <input class="input-xxlarge" type="text" placeholder="http://localhost/" />
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn btn-default btn-primary" data-dismiss="modal">Close</a>
+                </div>
+              </div>
             </div>
           </div>
-          <div id="htaTag" class="col-md-2 well sidebar-nav"></div>
-          <div id="htaList" class="col-md-9"></div>
-        </div>
+          <div id="addModal" class="modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" data-dismiss="modal">×</button>
+                  <h3>Add an address</h3>
+                </div>
+                <div class="modal-body">
+                  <input class="input-xlarge" type="text" name="name" placeholder="Name" />
+                  <input class="input-xlarge" type="text" name="url" placeholder="URL" />
+                  <select data-placeholder="Pick icon" name="graphic" class="input-xlarge chzn-select">
+                    <option>Red</option>
+                    <option>Green</option>
+                    <option>Yellow</option>
+                  </select>
+                  <textarea id="notes" rows="5" class="input-xxlarge"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <a id="saveHta" href="#" class="btn btn-default btn-primary" data-dismiss="modal">Save</a>
+                  <a href="#" class="btn btn-default btn-secondary" data-dismiss="modal">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="htaList"></div>
       </div>
-    </body>
-  </html>
+  </body>
+</html>

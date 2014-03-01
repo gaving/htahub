@@ -2,7 +2,7 @@
 window.HTA = (function() {
   return {
     init: function() {
-      var AddView, App, AppRouter, Hta, HtaCollection, HtaListView, HtaTagView, HtaView, NavView, Tag, TagCollection, TagView;
+      var AddView, App, AppRouter, Hta, HtaCollection, HtaListView, HtaView, NavView;
       _.templateSettings.interpolate = /\{\{(.+?)\}\}/g;
       Hta = Backbone.Model.extend({
         file: function() {
@@ -28,20 +28,6 @@ window.HTA = (function() {
       HtaCollection = Backbone.Collection.extend({
         model: Hta,
         url: "../app/htas"
-      });
-      Tag = Backbone.Model.extend();
-      TagCollection = Backbone.Collection.extend({
-        model: Tag,
-        url: "../app/tags"
-      });
-      TagView = Backbone.View.extend({
-        tagName: "div",
-        render: function() {
-          var html, template;
-          template = $("#tagTemplate");
-          html = _.template(template.text(), this.model.toJSON());
-          return $(this.el).append(html);
-        }
       });
       HtaView = Backbone.View.extend({
         tagName: "div",
@@ -106,9 +92,6 @@ window.HTA = (function() {
         },
         handleFilter: function(e) {
           var name;
-          if (e.keyCode !== 13) {
-            return;
-          }
           name = $(e.currentTarget).val();
           return App.Views.ListView.getCollection().fetch({
             data: {
@@ -116,7 +99,10 @@ window.HTA = (function() {
             }
           }, (function() {
             return {
-              success: function() {}
+              fetch: true,
+              success: function() {
+                return console.log("yea");
+              }
             };
           }));
         }
@@ -128,55 +114,16 @@ window.HTA = (function() {
         initialize: function() {
           return this.render();
         },
-        render: function() {
-          var tags;
-          tags = new TagCollection;
-          tags.on("reset", function() {
-            var html;
-            html = _.template($("#addSelectTemplate").html(), {
-              tags: tags.toJSON()
-            });
-            $('#tags').append(html);
-            return $('.chzn-select').chosen();
-          });
-          return tags.fetch();
-        },
+        render: function() {},
         handleAdd: function() {
           return App.Views.ListView.getCollection().create({
             name: $(this.el).find('input[name=name]').val(),
             url: $(this.el).find('input[name=url]').val(),
-            graphic: $(this.el).find('select[name=graphic] option:selected').val(),
-            tags: $(this.el).find("select[name=tags] option:selected").map(function() {
-              return this.value;
-            }).get().join(",")
+            graphic: $(this.el).find('select[name=graphic] option:selected').val()
           });
         },
         show: function() {
           return $(this.el).modal('toggle');
-        }
-      });
-      HtaTagView = Backbone.View.extend({
-        tagName: "ul",
-        className: "nav nav-list",
-        initialize: function() {
-          this.listenTo(this.collection, 'reset', this.render);
-          return this.listenTo(this.collection, 'add', this.renderItem);
-        },
-        renderItem: function(model) {
-          var tagView;
-          tagView = new TagView({
-            model: model
-          });
-          tagView.render();
-          return $(this.el).append(tagView.el);
-        },
-        render: function() {
-          $(this.el).empty();
-          this.collection.each($.proxy(this.renderItem, this));
-          return $("#htaTag").html(this.el);
-        },
-        getCollection: function() {
-          return this.collection;
         }
       });
       HtaListView = Backbone.View.extend({
@@ -211,48 +158,17 @@ window.HTA = (function() {
       };
       AppRouter = Backbone.Router.extend({
         routes: {
-          "": "index",
-          "tagged/:tag": "tagged"
+          "": "index"
         },
         index: function() {
-          var htas, tags;
+          var htas;
+          new NavView();
           htas = new HtaCollection;
           App.Views.ListView = new HtaListView({
             collection: htas
           });
-          htas.fetch({
+          return htas.fetch({
             reset: true,
-            success: function() {}
-          });
-          tags = new TagCollection;
-          App.Views.TagView = new HtaTagView({
-            collection: tags
-          });
-          return tags.fetch({
-            reset: true,
-            success: function() {}
-          });
-        },
-        tagged: function(tag) {
-          var htas, tags;
-          htas = new HtaCollection;
-          App.Views.ListView = new HtaListView({
-            collection: htas
-          });
-          App.Views.ListView.getCollection().fetch({
-            data: {
-              tag: tag
-            }
-          }, (function() {
-            return {
-              success: function() {}
-            };
-          }));
-          tags = new TagCollection;
-          App.Views.TagView = new HtaTagView({
-            collection: tags
-          });
-          return tags.fetch({
             success: function() {}
           });
         }

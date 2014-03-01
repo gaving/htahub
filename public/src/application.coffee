@@ -20,18 +20,6 @@ window.HTA = do ->
       model: Hta
       url: "../app/htas"
 
-    Tag = Backbone.Model.extend()
-    TagCollection = Backbone.Collection.extend
-      model: Tag
-      url: "../app/tags"
-
-    TagView = Backbone.View.extend
-      tagName: "div"
-      render: ->
-        template = $("#tagTemplate")
-        html = _.template(template.text(), @model.toJSON())
-        $(@el).append html
-
     HtaView = Backbone.View.extend
       tagName: "div"
       className: "row"
@@ -86,10 +74,11 @@ window.HTA = do ->
         new AddView({ el: $('#addModal') }).show()
 
       handleFilter: (e) ->
-        return unless e.keyCode == 13
         name = $(e.currentTarget).val()
         App.Views.ListView.getCollection().fetch { data: { name: name } }, (->
+          fetch: true
           success: ->
+            console.log "yea"
         )
 
     AddView = Backbone.View.extend
@@ -100,45 +89,15 @@ window.HTA = do ->
         @render()
 
       render: ->
-          tags = new TagCollection
-          tags.on "reset", ->
-            html = _.template $("#addSelectTemplate").html(), tags: tags.toJSON()
-            $('#tags').append html
-            $('.chzn-select').chosen()
-          tags.fetch()
 
       handleAdd: ->
         App.Views.ListView.getCollection().create
           name: $(this.el).find('input[name=name]').val()
           url: $(this.el).find('input[name=url]').val()
           graphic: $(this.el).find('select[name=graphic] option:selected').val()
-          tags: $(this.el).find("select[name=tags] option:selected").map(->
-            return this.value
-          ).get().join(",")
 
       show: ->
         $(this.el).modal('toggle')
-
-    HtaTagView = Backbone.View.extend
-      tagName: "ul"
-      className: "nav nav-list"
-
-      initialize: ->
-        @listenTo(@collection, 'reset', @render)
-        @listenTo(@collection, 'add', @renderItem)
-
-      renderItem: (model) ->
-        tagView = new TagView(model: model)
-        tagView.render()
-        $(@el).append tagView.el
-
-      render: ->
-        $(@el).empty()
-        @collection.each $.proxy(@renderItem, @)
-        $("#htaTag").html @el
-
-      getCollection: ->
-        return @collection
 
     HtaListView = Backbone.View.extend
       el: "#htaList"
@@ -146,7 +105,6 @@ window.HTA = do ->
       initialize: ->
         @listenTo(@collection, 'reset', @render)
         @listenTo(@collection, 'add', @renderItem)
-        #new NavView()
 
       renderItem: (model) ->
         htaView = new HtaView(model: model)
@@ -171,29 +129,14 @@ window.HTA = do ->
     AppRouter = Backbone.Router.extend
       routes:
         "": "index"
-        "tagged/:tag": "tagged"
 
       index: ->
+        new NavView()
+
         htas = new HtaCollection
         App.Views.ListView = new HtaListView(collection: htas)
         htas.fetch
           reset: true
-          success: ->
-        tags = new TagCollection
-        App.Views.TagView = new HtaTagView(collection: tags)
-        tags.fetch
-          reset: true
-          success: ->
-
-      tagged: (tag) ->
-        htas = new HtaCollection
-        App.Views.ListView = new HtaListView(collection: htas)
-        App.Views.ListView.getCollection().fetch { data: { tag: tag } }, (->
-          success: ->
-        )
-        tags = new TagCollection
-        App.Views.TagView = new HtaTagView(collection: tags)
-        tags.fetch
           success: ->
 
     App.init()
