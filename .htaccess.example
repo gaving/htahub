@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond $1 !(app|public) [NC]
+    #RewriteBase /~gavin/htahub
+
+    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteRule ^(css|js)/(.*)?$ public/$1/$2 [L,QSA,R=301]
+</IfModule>

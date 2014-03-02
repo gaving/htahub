@@ -4,7 +4,7 @@ window.HTA = do ->
 
     Hta = Backbone.Model.extend
       download: ->
-        return '../app/load/' + this.get('id')
+        return 'app/load/' + this.get('id')
       ssh: ->
         return 'ssh://' + this.get('url')?.split('/')[2]?.replace(/:.*/, '')
       hta: ->
@@ -18,7 +18,7 @@ window.HTA = do ->
 
     HtaCollection = Backbone.Collection.extend
       model: Hta
-      url: '../app/htas'
+      url: 'app/htas'
 
     HtaView = Backbone.View.extend
       tagName: 'div'

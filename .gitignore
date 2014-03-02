@@ -2,6 +2,7 @@
 tags
 node_modules/
 .ctrlp
+.htaccess
 composer.lock
 vendor
 bower_components

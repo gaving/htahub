@@ -6,7 +6,7 @@ window.HTA = (function() {
       _.templateSettings.interpolate = /\{\{(.+?)\}\}/g;
       Hta = Backbone.Model.extend({
         download: function() {
-          return '../app/load/' + this.get('id');
+          return 'app/load/' + this.get('id');
         },
         ssh: function() {
           var _ref, _ref1;
@@ -28,7 +28,7 @@ window.HTA = (function() {
       });
       HtaCollection = Backbone.Collection.extend({
         model: Hta,
-        url: '../app/htas'
+        url: 'app/htas'
       });
       HtaView = Backbone.View.extend({
         tagName: 'div',
