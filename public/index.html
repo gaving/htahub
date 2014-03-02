@@ -15,7 +15,6 @@
         <script type="text/javascript" src="js/application.js"></script>
         <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="bower_components/bootbox/bootbox.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js"></script>
         <script id="htaTemplate" type="text/template">
             <div class="col-md-3">
                 <h4><span class='label label-primary'>{{ name }}</span></h4>
@@ -93,18 +92,23 @@
                   <h3>Add an address</h3>
                 </div>
                 <div class="modal-body">
-                  <input class="input-xlarge" type="text" name="name" placeholder="Name" />
-                  <input class="input-xlarge" type="text" name="url" placeholder="URL" />
-                  <select data-placeholder="Pick icon" name="graphic" class="input-xlarge chzn-select">
-                    <option>Blue</option>
-                    <option>Green</option>
-                    <option>Light-Blue</option>
-                    <option>Orange</option>
-                    <option>Red</option>
-                    <option>White</option>
-                    <option>Yellow</option>
-                  </select>
-                  <textarea id="notes" rows="5" class="input-xxlarge"></textarea>
+                  <form class="form-horizontal" role="form">
+                    <div class="row">
+                      <div class="form-group col-lg-1">
+                        <input class="form-control" type="text" name="name" placeholder="Example" />
+                        <input class="form-control" type="text" name="url" placeholder="http://example.org/" />
+                        <select data-placeholder="Icon" name="graphic" class="form-control">
+                          <option>Blue</option>
+                          <option>Green</option>
+                          <option>Light-Blue</option>
+                          <option>Orange</option>
+                          <option>Red</option>
+                          <option>White</option>
+                          <option>Yellow</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
                 </div>
                 <div class="modal-footer">
                   <a id="saveHta" href="#" class="btn btn-default btn-primary" data-dismiss="modal">Save</a>
