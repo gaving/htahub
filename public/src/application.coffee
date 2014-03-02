@@ -55,8 +55,8 @@ window.HTA = do ->
         e.preventDefault()
         $('#copyModal').modal('toggle').find('input').val([
           window.location.href,
-          '../app/load/' + @model.get('id')
-        ].join('/'))
+          'app/load/' + @model.get('id')
+        ].join(''))
 
       render: ->
         template = $('#htaTemplate')

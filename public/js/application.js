@@ -72,7 +72,7 @@ window.HTA = (function() {
         },
         handleCopy: function(e) {
           e.preventDefault();
-          return $('#copyModal').modal('toggle').find('input').val([window.location.href, '../app/load/' + this.model.get('id')].join('/'));
+          return $('#copyModal').modal('toggle').find('input').val([window.location.href, 'app/load/' + this.model.get('id')].join(''));
         },
         render: function() {
           var html, template;
