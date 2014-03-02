@@ -5,9 +5,8 @@ window.HTA = (function() {
       var AddView, App, AppRouter, Hta, HtaCollection, HtaListView, HtaView, NavView;
       _.templateSettings.interpolate = /\{\{(.+?)\}\}/g;
       Hta = Backbone.Model.extend({
-        file: function() {
-          var _ref;
-          return (_ref = this.get('url')) != null ? _ref.replace('http', 'file') : void 0;
+        download: function() {
+          return '../app/load/' + this.get('id');
         },
         ssh: function() {
           var _ref, _ref1;
@@ -43,7 +42,7 @@ window.HTA = (function() {
         },
         handleDownload: function(e) {
           e.preventDefault();
-          return document.location.href = this.model.file();
+          return document.location.href = this.model.download();
         },
         handleHTA: function(e) {
           e.preventDefault();
@@ -73,7 +72,7 @@ window.HTA = (function() {
         },
         handleCopy: function(e) {
           e.preventDefault();
-          return $('#copyModal').modal('toggle').find('input').val([window.location.href, '../app/load/' + this.model.name()].join('/'));
+          return $('#copyModal').modal('toggle').find('input').val([window.location.href, '../app/load/' + this.model.get('id')].join('/'));
         },
         render: function() {
           var html, template;

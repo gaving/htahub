@@ -3,8 +3,8 @@ window.HTA = do ->
     _.templateSettings.interpolate = /\{\{(.+?)\}\}/g
 
     Hta = Backbone.Model.extend
-      file: ->
-        return this.get('url')?.replace('http', 'file')
+      download: ->
+        return '../app/load/' + this.get('id')
       ssh: ->
         return 'ssh://' + this.get('url')?.split('/')[2]?.replace(/:.*/, '')
       hta: ->
@@ -32,7 +32,7 @@ window.HTA = do ->
 
       handleDownload: (e) ->
         e.preventDefault()
-        document.location.href = @model.file()
+        document.location.href = @model.download()
 
       handleHTA: (e) ->
         e.preventDefault()
@@ -55,7 +55,7 @@ window.HTA = do ->
         e.preventDefault()
         $('#copyModal').modal('toggle').find('input').val([
           window.location.href,
-          '../app/load/' + @model.name()
+          '../app/load/' + @model.get('id')
         ].join('/'))
 
       render: ->
