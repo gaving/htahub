@@ -41,10 +41,10 @@ class HTALoader
 
     public function fetch(array $term=null)
     {
-        if (is_null($term)) {
-            $b = R::find('hta', '1 ORDER BY name DESC');
+        if (!array_filter($term)) {
+            $b = R::find('hta', '1 ORDER BY LOWER(name) DESC');
         } else {
-            $b = R::find('hta','name LIKE :name OR url LIKE :url ORDER BY name DESC', array(
+            $b = R::find('hta','name LIKE :name OR url LIKE :url ORDER BY LOWER(name) DESC', array(
                 ':name' => '%'.$term['name'].'%',
                 ':url' => '%'.$term['url'].'%'
             ));
