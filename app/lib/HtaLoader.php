@@ -44,8 +44,9 @@ class HTALoader
         if (is_null($term)) {
             $b = R::find('hta', '1 ORDER BY name DESC');
         } else {
-            $b = R::find('hta','name LIKE :name ORDER BY name DESC', array(
-                ':name' => '%'.$term['name'].'%'
+            $b = R::find('hta','name LIKE :name OR url LIKE :url ORDER BY name DESC', array(
+                ':name' => '%'.$term['name'].'%',
+                ':url' => '%'.$term['url'].'%'
             ));
         }
         return R::exportAll($b);

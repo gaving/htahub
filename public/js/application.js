@@ -94,12 +94,14 @@ window.HTA = (function() {
           }).show();
         },
         handleFilter: function(e) {
-          var name;
+          var name, url;
           name = $(e.currentTarget).val();
+          url = $(e.currentTarget).val();
           return App.Views.ListView.getCollection().fetch({
             reset: true,
             data: {
-              name: name
+              name: name,
+              url: url
             }
           });
         }

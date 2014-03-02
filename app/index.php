@@ -12,7 +12,8 @@ $app->response->headers->set('Content-Type', 'application/json');
 
 $app->get('/htas', function () use ($app, $loader) {
     $app->response->body(json_encode($loader->fetch(array(
-        'name' => $app->request()->params('name')
+        'name' => $app->request()->params('name'),
+        'url' => $app->request()->params('url')
     ))));
 });
 

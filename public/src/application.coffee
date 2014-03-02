@@ -75,7 +75,12 @@ window.HTA = do ->
 
       handleFilter: (e) ->
         name = $(e.currentTarget).val()
-        App.Views.ListView.getCollection().fetch({ reset: true, data: { name: name } })
+        url = $(e.currentTarget).val()
+        App.Views.ListView.getCollection().fetch
+          reset: true,
+          data: 
+            name: name
+            url: url
 
     AddView = Backbone.View.extend
       events:
