@@ -51,9 +51,4 @@ class HTALoader
         }
         return R::exportAll($b);
     }
-
-    public function wipe()
-    {
-        R::nuke();
-    }
 }
