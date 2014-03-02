@@ -4,8 +4,7 @@
         <hta:application id='smartmain' sysMenu='yes' applicationName='{{name}}'
         scroll='no' windowstate='maximize' maximizeButton='yes'
         singleInstance='no' caption='yes' border='thick' borderStyle='raised'
-        icon="http://tpscope/gg5052661/icons/{{graphic}}"
-        navigable='yes'>
+        icon="#" navigable='yes'>
         <title>{{name}}</title>
     </head>
     <frameset>
