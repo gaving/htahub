@@ -7,11 +7,7 @@ body {
     user-select: none;
 }
 
-.glyphicon {
-    color: white;
-}
-
-.download, .ssh, .launch {
+.glyphicon .download, .ssh, .launch {
     color: white;
 }
 
