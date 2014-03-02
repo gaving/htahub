@@ -1,5 +1,7 @@
 <?php
 
+namespace HtaLoader;
+
 use RedBean_Facade as R;
 
 class HTALoader

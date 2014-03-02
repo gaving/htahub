@@ -1,10 +1,10 @@
 <?php
 
 require_once '../vendor/autoload.php';
-require_once 'inc/HtaLoader.php';
+require_once 'lib/HtaLoader.php';
 
-$data = Spyc::YAMLLoad('config.yml');
-$loader = new HTALoader($data['config']['database']);
+$config = Spyc::YAMLLoad('config.yml');
+$loader = new \HtaLoader\HTALoader($config['config']['database']);
 
 $app = new \Slim\Slim();
 $app->add(New \Slim\Middleware\ContentTypes());
@@ -16,9 +16,9 @@ $app->get('/htas', function () use ($app, $loader) {
     ))));
 });
 
-$app->get('/load/:id', function ($id) use ($app, $loader) {
+$app->get('/load/:id', function ($id) use ($app, $loader, $config) {
     $hta = $loader->find($id)->export();
-    $hta['frame'] = 'smartmain';
+    $hta['frame'] = $config['config']['frame_id'];
     $m = new Mustache_Engine;
     $res = $app->response();
     $res['Content-Description'] = 'File Transfer';
