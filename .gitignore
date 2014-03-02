@@ -1,6 +1,5 @@
 .DS_Store
 tags
-data/
 node_modules/
 .ctrlp
 composer.lock
